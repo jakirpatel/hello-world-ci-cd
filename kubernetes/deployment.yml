@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-world
+  labels:
+    app: hello-world
+    env: production
+    ver: v1
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: hello-world
+      env: production
+      ver: v1
+  template:
+    metadata:
+      labels:
+        app: hello-world
+        env: production
+        ver: v1
+    spec:
+      containers:
+      - name: hello-world
+        image: r.cfcr.io/jakirpatel/helloworld:master
+        ports:
+        - containerPort: 3000

@@ -1,0 +1,23 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "Hello world app taken from: https://expressjs.com/en/starter/hello-world.html",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/borderguru/hello-world.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/borderguru/hello-world/issues"
+  },
+  "homepage": "https://github.com/borderguru/hello-world#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}

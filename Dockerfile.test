@@ -1,0 +1,18 @@
+# Test Image of the app
+FROM helloworldtest
+
+# Copy the Unit Tests
+COPY test test
+
+# Set Environment
+ENV NODE_ENV dev
+
+# Install Packages for the test
+RUN npm update && \
+    npm install mocha --save && \
+    npm install chai --save && \
+    npm install -g mocha && \
+    npm install request --save
+
+# Override the command, to run the test instead of the application
+CMD ["mocha", "test/test-page.js", "--reporter", "spec"]

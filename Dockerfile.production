@@ -1,7 +1,13 @@
+# The official image of the node
 FROM node:boron
+
+ARG VERSION=1.0.0
 
 # Create app directory
 WORKDIR /usr/src/app
+
+# Set required environment variables
+ENV NODE_ENV production
 
 # Install app dependencies
 COPY package.json .

@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: hello-world
+  namespace: production
   labels:
     app: hello-world
     env: production
@@ -22,6 +23,6 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: r.cfcr.io/jakirpatel/helloworld:master
+        image: kubejack/helloworld-production:latest
         ports:
         - containerPort: 3000

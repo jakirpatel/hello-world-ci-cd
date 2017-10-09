@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-world-svc
+  namespace: production
   labels:
     name: hello-world-svc
 spec:
@@ -9,7 +10,7 @@ spec:
   ports:
     - port: 80
       targetPort: 3000
-      protocol: TCP 
+      protocol: TCP
   selector:
     app: hello-world
     env: production

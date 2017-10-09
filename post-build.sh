@@ -25,3 +25,4 @@ EOF
 
 
 applyUpdate $BASTION_HOST $MASTER_IP $REPO_HTTPS_URL $REPO_NAME $USERNAME $DEPLOYMENT_UPDATE
+echo "Check the app on http://app.dockerslab.com"

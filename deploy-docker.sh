@@ -19,9 +19,6 @@ sudo docker build -t helloworld-test -f Dockerfile.test --no-cache.
 # Run the test
 sudo docker run -rm helloworld-test
 
-# Remove the test image
-sudo docker rmi helloworld-test
-
 # Tag the Docker Image
 sudo docker tag $DOCKER_USERNAME/helloworld-$ENV:$DATE$BUILD_NUMBER $DOCKER_USERNAME/helloworld-$ENV:latest
 
@@ -33,3 +30,6 @@ sudo docker push $DOCKER_USERNAME/helloworld-$ENV:$DATE$BUILD_NUMBER
 
 # the latest tag for this image:
 sudo docker push $DOCKER_USERNAME/helloworld-$ENV:latest
+
+#Anchore
+echo "$DOCKER_USERNAME/helloworld-$ENV:$DATE$BUILD_NUMBER ${WORKSPACE}/Dockerfile.production" > anchore_images

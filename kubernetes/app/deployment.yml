@@ -9,11 +9,6 @@ metadata:
     ver: v1
 spec:
   replicas: 10
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
-    type: RollingUpdate
   selector:
     matchLabels:
       app: hello-world
@@ -32,17 +27,3 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
-        livenessProbe:
-           httpGet:
-             # Path to probe; should be cheap, but representative of typical behavior
-             path: /
-             port: 3000
-           initialDelaySeconds: 30
-           timeoutSeconds: 1
-        resources:
-           limits:
-             cpu: 300m
-             memory: 50Mi
-           requests:
-             cpu: 300m
-             memory: 50Mi

@@ -15,7 +15,7 @@ function applyUpdate() {
       kubectl apply -f $2/kubernetes/app/ --record
       kubectl set image deployment/hello-world hello-world=kubejack/helloworld-production:$5$6 --namespace production --record
       rm -rf $2
-    elif [ "$6" == "rollback" ]; then
+    elif [ "$4" == "rollback" ]; then
       kubectl rollout undo deployments/hello-world --namespace production
     fi
 }

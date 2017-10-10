@@ -32,17 +32,4 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
-        resources:
-          limits:
-            cpu: 500m
-            memory: 128Mi
-          requests:
-            cpu: 500m
-            memory: 128Mi
-        livenessProbe:
-          httpGet:
-            # Path to probe; should be cheap, but representative of typical behavior
-            path: /
-            port: 3000
-          initialDelaySeconds: 30
-          timeoutSeconds: 1
+

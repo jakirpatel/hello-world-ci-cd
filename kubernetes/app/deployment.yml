@@ -24,5 +24,6 @@ spec:
       containers:
       - name: hello-world
         image: kubejack/helloworld-production:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000

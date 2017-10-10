@@ -1,0 +1,65 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: dd-agent
+spec:
+  template:
+    metadata:
+      labels:
+        app: dd-agent
+      name: dd-agent
+    spec:
+      containers:
+      - image: datadog/docker-dd-agent:latest
+        imagePullPolicy: Always
+        name: dd-agent
+        ports:
+          - containerPort: 8125
+            name: dogstatsdport
+            protocol: UDP
+        env:
+          - name: API_KEY
+            value: 8f8e783e759a660d100f1ef5cece4d63
+          - name: KUBERNETES
+            value: "yes"
+          - name: SD_BACKEND
+            value: docker
+          # Uncomment this variable if the agent has issues reaching kubelet
+          # - name: KUBERNETES_KUBELET_HOST
+          #   valueFrom:
+          #     fieldRef:
+          #       fieldPath: status.hostIP  # Kubernetes >= 1.7
+          #       # or
+          #       # fieldPath: spec.nodeName  # Kubernetes < 1.7
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "250m"
+        volumeMounts:
+          - name: dockersocket
+            mountPath: /var/run/docker.sock
+          - name: procdir
+            mountPath: /host/proc
+            readOnly: true
+          - name: cgroups
+            mountPath: /host/sys/fs/cgroup
+            readOnly: true
+        livenessProbe:
+          exec:
+            command:
+            - ./probe.sh
+          initialDelaySeconds: 15
+          periodSeconds: 5
+      volumes:
+        - hostPath:
+            path: /var/run/docker.sock
+          name: dockersocket
+        - hostPath:
+            path: /proc
+          name: procdir
+        - hostPath:
+            path: /sys/fs/cgroup
+          name: cgroups

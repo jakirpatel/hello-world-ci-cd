@@ -14,7 +14,7 @@ function applyUpdate() {
   ssh -A $5@$1 << EOF
     ssh $5@$2 << ABC
      #git clone $3
-     if [ "$6" == "update" ]; then git clone $3 && kubectl set image deployment/hello-world hello-world=$DOCKER_USERNAME/helloworld-$ENV:$DATE$BUILD_NUMBER --namespace production && rm -rf $4 ; fi
+     if [ "$6" == "update" ]; then git clone $3 && kubectl set image deployment/hello-world hello-world=$10/helloworld-$7:$8$9 --namespace production && rm -rf $4 ; fi
      if [ "$6" == "rollback" ]; then kubectl rollout undo deployments/hello-world --namespace production ; fi
      #rm -rf $4
      exit
@@ -24,4 +24,4 @@ EOF
 echo "Check the app on http://app.dockerslab.com"
 }
 
-applyUpdate $BASTION_HOST $MASTER_IP $REPO_HTTPS_URL $REPO_NAME $USERNAME $DEPLOYMENT_UPDATE
+applyUpdate $BASTION_HOST $MASTER_IP $REPO_HTTPS_URL $REPO_NAME $USERNAME $DEPLOYMENT_UPDATE $ENV $DATE $BUILD_NUMBER $DOCKER_USERNAME

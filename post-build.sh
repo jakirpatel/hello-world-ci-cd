@@ -10,11 +10,10 @@ DATE=`date +%Y%m%d`
 
 function applyUpdate() {
 
-    echo $1 $2 $3 $4 $5 $6
     if [ "$4" == "update" ]; then
       git clone $1
-      kubectl apply -f $2/kubernetes/app/
-      kubectl set image deployment/hello-world hello-world=kubejack/helloworld-production:$5$6 --namespace production
+      kubectl apply -f $2/kubernetes/app/ --record
+      kubectl set image deployment/hello-world hello-world=kubejack/helloworld-production:$5$6 --namespace production --record
       rm -rf $2
     elif [ "$6" == "rollback" ]; then
       kubectl rollout undo deployments/hello-world --namespace production

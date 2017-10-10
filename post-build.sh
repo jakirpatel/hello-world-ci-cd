@@ -9,19 +9,16 @@ ENVTEST="test"
 DATE=`date +%Y%m%d`
 
 function applyUpdate() {
-  eval `ssh-agent`
-  ssh-add ~/.ssh/id_rsa
-  ssh -A $5@$1 << EOF
-    ssh $5@$2 << ABC
-     #git clone $3
-     if [ "$6" == "update" ]; then git clone $3 && kubectl set image deployment/hello-world hello-world=$10/helloworld-$7:$8$9 --namespace production && rm -rf $4 ; fi
-     if [ "$6" == "rollback" ]; then kubectl rollout undo deployments/hello-world --namespace production ; fi
-     #rm -rf $4
-     exit
-ABC
-    exit
-EOF
-echo "Check the app on http://app.dockerslab.com"
+
+    echo $1 $2 $3 $4 $5 $6
+    if [ "$4" == "update" ]; then
+      git clone $1
+      kubectl apply -f $2/kubernetes/app/
+      kubectl set image deployment/hello-world hello-world=kubejack/helloworld-production:$5$6 --namespace production
+      rm -rf $2
+    elif [ "$6" == "rollback" ]; then
+      kubectl rollout undo deployments/hello-world --namespace production
+    fi
 }
 
-applyUpdate $BASTION_HOST $MASTER_IP $REPO_HTTPS_URL $REPO_NAME $USERNAME $DEPLOYMENT_UPDATE $ENV $DATE $BUILD_NUMBER $DOCKER_USERNAME
+applyUpdate $REPO_HTTPS_URL $REPO_NAME $USERNAME $DEPLOYMENT_TYPE $DATE $BUILD_NUMBER
